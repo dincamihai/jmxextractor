@@ -15,7 +15,7 @@ def extractor():
 
 
 def test_extract_test_plan_name(extractor):
-    assert extractor.testplanname == 'My test plan'
+    assert extractor.test_plan_name == 'My test plan'
 
 
 def test_extract_num_threads(extractor):
@@ -24,3 +24,7 @@ def test_extract_num_threads(extractor):
 
 def test_extract_ramp_time(extractor):
     assert extractor.ramp_time == 60
+
+
+def test_extract_domain(extractor):
+    assert extractor.domain == 'test.loadimpact.com'
