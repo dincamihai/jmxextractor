@@ -1,5 +1,5 @@
 import pytest
-from lib.extractor import Extractor
+from jmxextractor.extractor import Extractor
 
 
 @pytest.fixture
