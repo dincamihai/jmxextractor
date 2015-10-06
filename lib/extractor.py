@@ -43,7 +43,8 @@ class Extractor(object):
         for node in self.root.findall(self.XPATHS['URLS']):
             urls.append(
                 dict(
-                    path=node.find("./stringProp[@name='HTTPSampler.path']").text
+                    path=node.find("./stringProp[@name='HTTPSampler.path']").text,
+                    method=node.find("./stringProp[@name='HTTPSampler.method']").text
                 )
             )
         return urls
