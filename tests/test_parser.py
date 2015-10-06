@@ -28,3 +28,7 @@ def test_extract_ramp_time(extractor):
 
 def test_extract_domain(extractor):
     assert extractor.domain == 'test.loadimpact.com'
+
+
+def test_extract_concurrent_pool(extractor):
+    assert extractor.concurrent_pool == 4

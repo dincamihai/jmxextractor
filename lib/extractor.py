@@ -8,6 +8,7 @@ class Extractor(object):
         NUM_THREADS="hashTree/hashTree/ThreadGroup/stringProp[@name='ThreadGroup.num_threads']",
         RAMP_TIME="hashTree/hashTree/ThreadGroup/stringProp[@name='ThreadGroup.ramp_time']",
         DOMAIN="hashTree/hashTree/hashTree/ConfigTestElement/stringProp[@name='HTTPSampler.domain']",
+        CONCURENT_POOL="hashTree/hashTree/hashTree/ConfigTestElement/stringProp[@name='HTTPSampler.concurrentPool']",
     )
 
     def __init__(self, jmx_path):
@@ -30,3 +31,7 @@ class Extractor(object):
     @property
     def domain(self):
         return self.root.find(self.XPATHS['DOMAIN']).text
+
+    @property
+    def concurrent_pool(self):
+        return int(self.root.find(self.XPATHS['CONCURENT_POOL']).text)
