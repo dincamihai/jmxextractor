@@ -32,3 +32,8 @@ def test_extract_domain(extractor):
 
 def test_extract_concurrent_pool(extractor):
     assert extractor.concurrent_pool == 4
+
+
+def test_extract_paths(extractor):
+    expected = ['/', '/news.php', '/', '/flip_coin.php', '/flip_coin.php']
+    assert [url['path'] for url in extractor.urls] == expected
