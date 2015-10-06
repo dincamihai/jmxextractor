@@ -34,11 +34,16 @@ def test_extract_concurrent_pool(extractor):
     assert extractor.concurrent_pool == 4
 
 
-def test_extract_paths(extractor):
+def test_extract_urls_paths(extractor):
     expected = ['/', '/news.php', '/', '/flip_coin.php', '/flip_coin.php']
     assert [url['path'] for url in extractor.urls] == expected
 
 
-def test_extract_methods(extractor):
+def test_extract_urls_methods(extractor):
     expected = 5 * ['GET']
     assert [url['method'] for url in extractor.urls] == expected
+
+
+def test_extract_urls_arguments(extractor):
+    expected = [None, None, None, None, {'bet': 'heads'}]
+    assert [url.get('arguments', None) for url in extractor.urls] == expected
