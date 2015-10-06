@@ -3,17 +3,10 @@ from lxml import etree
 
 class Extractor(object):
 
-    TEST_PLAN_NAME=dict(
-        xpath='hashTree/TestPlan',
-        attribute='testname'
-    )
-
-    NUM_THREADS=dict(
-        xpath="hashTree/hashTree/ThreadGroup/stringProp[@name='ThreadGroup.num_threads']"
-    )
-
-    RAMP_TIME=dict(
-        xpath="hashTree/hashTree/ThreadGroup/stringProp[@name='ThreadGroup.ramp_time']"
+    XPATHS=dict(
+        TEST_PLAN_NAME="hashTree/TestPlan",
+        NUM_THREADS="hashTree/hashTree/ThreadGroup/stringProp[@name='ThreadGroup.num_threads']",
+        RAMP_TIME="hashTree/hashTree/ThreadGroup/stringProp[@name='ThreadGroup.ramp_time']",
     )
 
     def __init__(self, jmx_path):
@@ -23,13 +16,12 @@ class Extractor(object):
 
     @property
     def testplanname(self):
-        xpath, attribute = self.TEST_PLAN_NAME.values()
-        return self.root.find(xpath).get(attribute)
+        return self.root.find(self.XPATHS['TEST_PLAN_NAME']).get('testname')
 
     @property
     def num_threads(self):
-        return int(self.root.find(self.NUM_THREADS['xpath']).text)
+        return int(self.root.find(self.XPATHS['NUM_THREADS']).text)
 
     @property
     def ramp_time(self):
-        return int(self.root.find(self.RAMP_TIME['xpath']).text)
+        return int(self.root.find(self.XPATHS['RAMP_TIME']).text)
