@@ -2,15 +2,30 @@ import pytest
 from lxml import etree
 
 
-XPATHS = dict(
+class Extractor(object):
+
     TEST_PLAN_NAME=dict(
         xpath='hashTree/TestPlan',
         attribute='testname'
-    ),
+    )
+
     NUM_THREADS=dict(
         xpath="hashTree/hashTree/ThreadGroup/stringProp[@name='ThreadGroup.num_threads']",
     )
-)
+
+    def __init__(self, jmx_path):
+        with open('tests/sample.jmx', 'rb') as jmx:
+            self.tree = etree.parse(jmx)
+            self.root = self.tree.getroot()
+
+    @property
+    def testplanname(self):
+        xpath, attribute = self.TEST_PLAN_NAME.values()
+        return self.root.find(xpath).get(attribute)
+
+    @property
+    def num_threads(self):
+        return int(self.root.find(self.NUM_THREADS['xpath']).text)
 
 
 @pytest.fixture
@@ -20,11 +35,14 @@ def root():
         return tree.getroot()
 
 
-def test_extract_test_plan_name(root):
-    xpath, attribute = XPATHS['TEST_PLAN_NAME'].values()
-    assert root.find(xpath).get(attribute) == 'My test plan'
+@pytest.fixture
+def extractor():
+    return Extractor('tests/sample.jmx')
 
 
-def test_extract_num_threads(root):
-    [xpath] = XPATHS['NUM_THREADS'].values()
-    assert int(root.find(xpath).text) == 50
+def test_extract_test_plan_name(extractor):
+    assert extractor.testplanname == 'My test plan'
+
+
+def test_extract_num_threads(extractor):
+    assert extractor.num_threads == 50
