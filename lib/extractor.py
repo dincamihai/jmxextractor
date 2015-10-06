@@ -9,7 +9,11 @@ class Extractor(object):
     )
 
     NUM_THREADS=dict(
-        xpath="hashTree/hashTree/ThreadGroup/stringProp[@name='ThreadGroup.num_threads']",
+        xpath="hashTree/hashTree/ThreadGroup/stringProp[@name='ThreadGroup.num_threads']"
+    )
+
+    RAMP_TIME=dict(
+        xpath="hashTree/hashTree/ThreadGroup/stringProp[@name='ThreadGroup.ramp_time']"
     )
 
     def __init__(self, jmx_path):
@@ -25,3 +29,7 @@ class Extractor(object):
     @property
     def num_threads(self):
         return int(self.root.find(self.NUM_THREADS['xpath']).text)
+
+    @property
+    def ramp_time(self):
+        return int(self.root.find(self.RAMP_TIME['xpath']).text)

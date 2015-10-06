@@ -20,3 +20,7 @@ def test_extract_test_plan_name(extractor):
 
 def test_extract_num_threads(extractor):
     assert extractor.num_threads == 50
+
+
+def test_extract_ramp_time(extractor):
+    assert extractor.ramp_time == 60
