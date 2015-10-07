@@ -21,29 +21,18 @@ class Extractor(object):
         with open('tests/sample.jmx', 'rb') as jmx:
             self.tree = etree.parse(jmx)
             self.root = self.tree.getroot()
+            self.test_plan_name= self.root.find(
+                self.XPATHS['TEST_PLAN_NAME']).get('testname')
+            self.num_threads = int(
+                self.root.find(self.XPATHS['NUM_THREADS']).text)
+            self.ramp_time = int(
+                self.root.find(self.XPATHS['RAMP_TIME']).text)
+            self.domain = self.root.find(self.XPATHS['DOMAIN']).text
+            self.concurrent_pool = int(
+                self.root.find(self.XPATHS['CONCURENT_POOL']).text)
+            self.urls = self.get_urls()
 
-    @property
-    def test_plan_name(self):
-        return self.root.find(self.XPATHS['TEST_PLAN_NAME']).get('testname')
-
-    @property
-    def num_threads(self):
-        return int(self.root.find(self.XPATHS['NUM_THREADS']).text)
-
-    @property
-    def ramp_time(self):
-        return int(self.root.find(self.XPATHS['RAMP_TIME']).text)
-
-    @property
-    def domain(self):
-        return self.root.find(self.XPATHS['DOMAIN']).text
-
-    @property
-    def concurrent_pool(self):
-        return int(self.root.find(self.XPATHS['CONCURENT_POOL']).text)
-
-    @property
-    def urls(self):
+    def get_urls(self):
         urls = []
         for node in self.root.findall(self.XPATHS['URLS']):
             arguments = dict()
