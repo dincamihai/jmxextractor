@@ -1,8 +1,12 @@
-class ExtractionException(Exception):
+class ExtractorException(Exception):
     pass
 
 
-class CastException(Exception):
+class ExtractionException(ExtractorException):
+    pass
+
+
+class CastException(ExtractorException):
     pass
 
 
